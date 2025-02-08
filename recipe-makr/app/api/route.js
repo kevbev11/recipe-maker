@@ -29,7 +29,7 @@ export async function POST(req) {
           content: [
             { 
               type: "text", 
-              text: "Please identify this food and provide a detailed recipe for making it. Include:\n1. Name of the dish\n2. List of ingredients with measurements\n3. Step-by-step cooking instructions\n4. Estimated cooking time\n5. Difficulty level" 
+              text: "Please identify this food and provide a detailed recipe for making it. Only include things required for the recipe because this will be displayed on a website. Include:\n1. List of ingredients with measurements\n2. Step-by-step cooking instructions\n3. Estimated cooking time\n4. Difficulty level" 
             },
             {
               type: "image_url",

@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 export default function GPTComponent() {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
-  // const [recipe, setRecipe] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter(); 
@@ -29,6 +28,8 @@ const handleSubmit = async (e: React.FormEvent) => {
       setError("Please upload an image.");
       return;
     }
+
+    setLoading(true);
   
     const formData = new FormData();
     formData.append("image", selectedImage);
@@ -50,6 +51,8 @@ const handleSubmit = async (e: React.FormEvent) => {
     } catch (err) {
       setError("An unexpected error occurred.");
       console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
   
@@ -135,7 +138,7 @@ const handleSubmit = async (e: React.FormEvent) => {
               }}
               disabled={loading || !selectedImage}
             >
-              {loading ? "Analyzing Image..." : "Generate Recipe"}
+              {loading ? "Generating Recipe..." : "Generate Recipe"}
             </button>
           </div>
         </form>
