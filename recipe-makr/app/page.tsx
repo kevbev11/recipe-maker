@@ -19,10 +19,10 @@ export default function Home() {
       </Head>
       <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: 'var(--background)' }}>
       <div className="text-center">
-        <h1 className="text-7xl font-bold mb-4 text-[var(--soft-orange)]">
+        <h1 className="text-7xl font-bold mb-4 text-[var(--light-cream)]">
           Welcome to <span className="text-[var(--vibrant-orange)]">Recipe Makr!</span>
         </h1>
-        <p className="italic text-2xl mb-6 text-[var(--peach)]"> 
+        <p className="italic text-2xl mb-6 text-[var(--light-cream)]"> 
           From Picture to Plate
         </p>
         <button

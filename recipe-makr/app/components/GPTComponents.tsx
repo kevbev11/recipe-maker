@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 export default function GPTComponent() {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
-  const [recipe, setRecipe] = useState("");
+  // const [recipe, setRecipe] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter(); 
@@ -43,7 +43,6 @@ const handleSubmit = async (e: React.FormEvent) => {
       console.log("API Response:", data); // Debugging log
   
       if (response.ok) {
-        // setRecipe(data.description);
         router.push(`/display-recipe?recipe=${encodeURIComponent(data.description)}`);
       } else {
         setError(data.error || "Failed to generate a response.");
@@ -54,51 +53,94 @@ const handleSubmit = async (e: React.FormEvent) => {
     }
   };
   
-
   return (
-    <div style={{ height: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
-      <div className="p-6 max-w-xl mx-auto">
-        <h1 className="text-7xl font-bold mb-6 text-center">Recipe Makr</h1>
+    <div
+      style={{
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: "20px",
+      }}
+    >
+      <div
+        style={{
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "20px",
+        }}
+      >
+        <h1 className="text-7xl font-bold mb-10 text-center text-[var(--foreground)]">Recipe Makr</h1>
 
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4 text-center justify-center items-center">
-            <label className="block text-lg font-medium mb-2">Upload an image of the dish:</label>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="text-center">
+            <label
+              htmlFor="file-upload"
+              className="px-6 py-3 rounded-full text-lg font-medium transition-all cursor-pointer"
+              style={{
+                backgroundColor: "var(--vibrant-orange)",
+                color: "white",
+                fontWeight: "bold",
+              }}
+              onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "var(--soft-orange)")}
+              onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "var(--vibrant-orange)")}
+            >
+              Choose File
+            </label>
             <input
+              id="file-upload"
               type="file"
               accept="image/*"
               onChange={handleImageChange}
-              className="w-full p-2 border rounded"
+              className="hidden"
             />
+            {selectedImage && <p className="mt-2 text-sm">{selectedImage.name}</p>}
           </div>
 
           {previewImage && (
-            <div className="mb-4">
-              <p className="text-md font-semibold">Preview:</p>
+          <div className="flex justify-center">
+            <div className="inline-block border border-gray-300 p-2 rounded-md">
               <img
                 src={previewImage}
                 alt="Dish Preview"
-                className="w-full h-auto rounded border mt-2"
+                className="w-auto h-auto max-w-full max-h-[500px] object-contain rounded" // 🔸 Dynamically fit image size
               />
             </div>
+          </div>
           )}
 
-          <button
-            type="submit"
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400"
-            disabled={loading || !selectedImage}
-          >
-            {loading ? "Analyzing Image..." : "Generate Recipe"}
-          </button>
+          <div className="text-center">
+            <button
+              type="submit"
+              className={`px-6 py-3 rounded-full text-lg font-medium transition-all ${
+                loading || !selectedImage ? "bg-gray-400 cursor-not-allowed" : ""
+              }`}
+              style={{
+                backgroundColor: loading || !selectedImage ? "gray" : "var(--vibrant-orange)",
+                color: "white",
+                fontWeight: "bold",
+              }}
+              onMouseOver={(e) => {
+                if (!(loading || !selectedImage)) {
+                  e.currentTarget.style.backgroundColor = "var(--soft-orange)";
+                }
+              }}
+              onMouseOut={(e) => {
+                if (!(loading || !selectedImage)) {
+                  e.currentTarget.style.backgroundColor = "var(--vibrant-orange)";
+                }
+              }}
+              disabled={loading || !selectedImage}
+            >
+              {loading ? "Analyzing Image..." : "Generate Recipe"}
+            </button>
+          </div>
         </form>
 
         {error && <p className="text-red-500 mt-4">{error}</p>}
-
-        {recipe && (
-          <div className="mt-6 p-4 border rounded bg-gray-100">
-            <h2 className="text-xl font-bold mb-2">Generated Recipe:</h2>
-            <p className="whitespace-pre-wrap">{recipe}</p>
-          </div>
-        )}
       </div>
     </div>
   );
