@@ -1,21 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Background and Text Colors */
+  --background: #FFF5E1; /* Light Cream */
+  --foreground: #5A4636; /* Dark brown for text contrast */
+
+  /* Custom Palette Colors */
+  --light-cream: #FFF5E1;
+  --light-peach: #FFE3C4;
+  --peach: #FFD1A1;
+  --soft-orange: #FFB76B;
+  --vibrant-orange: #FF9900;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #A5885F;
+    --foreground: #FDF3E2;
   }
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Poppins', Arial, sans-serif;
+  letter-spacing: 0.02rem;
+}
+
+h1 {
+  font-weight: 700;
+  letter-spacing: 0.05rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Subtle shadow for a puffy effect */
+}
+
+p {
+  font-weight: 400;
+  letter-spacing: 0.03rem;
+  text-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.1); /* Subtle puffiness */
+}
+
+.button {
+  padding: 1rem 2rem;
+  background-color: var(--dark-orange);
+  color: white;
+  border-radius: 8px;
+  font-size: 1.125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: var(--soft-orange);
 }
